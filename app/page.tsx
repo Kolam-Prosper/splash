@@ -1,3 +1,4 @@
+// app/page.tsx
 "use client"
 
 import Link from "next/link"
@@ -32,7 +33,7 @@ export default function Home() {
         </header>
 
         {/* Hero Section */}
-        <main className="flex-grow flex items-center justify-center relative pt-20">
+        <main className="flex-grow flex items-center justify-center relative pt-28">
           {/* Background Pattern */}
           <div className="absolute inset-0 z-0 overflow-hidden">
             <div className="w-full h-full bg-[url('/network-bg.svg')] bg-center bg-no-repeat bg-cover opacity-30"></div>
