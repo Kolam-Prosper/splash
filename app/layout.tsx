@@ -1,20 +1,15 @@
-// app/layout.tsx
-import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
-import './globals.css'
-import NotificationBanner from './components/notification-banner'
+import type React from "react"
+import type { Metadata } from "next"
+import { Inter } from "next/font/google"
+import "./globals.css"
+import Navigation from "./components/navigation"
+import NotificationBanner from "./components/notification-banner"
 
-const inter = Inter({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  display: 'swap',
-  variable: '--font-inter',
-})
+const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: 'KolamProsper - Revolutionizing Finance Through Tokenization',
-  description: 'Tokenized T-bonds and property deeds with secure staking and non-liquidating loan options.',
-  viewport: 'width=device-width, initial-scale=1',
+  title: "KolamProsper",
+  description: "Revolutionizing Finance Through Tokenization",
 }
 
 export default function RootLayout({
@@ -23,11 +18,17 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="dark">
-      <body className={`${inter.variable} antialiased bg-black`}>
+    <html lang="en">
+      <body className={inter.className}>
         <NotificationBanner />
-        {children}
+        <Navigation />
+        <div className="pt-16">
+          {" "}
+          {/* Add padding to account for fixed navbar */}
+          {children}
+        </div>
       </body>
     </html>
   )
 }
+
