@@ -35,9 +35,12 @@ export default function Navigation() {
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
             <Link href="/" className="flex-shrink-0">
-              <h1 className="text-xl font-bold text-white">
-                Kolam<span className="text-orange-500">Prosper</span>
-              </h1>
+              <div className="flex flex-col">
+                <h1 className="text-2xl md:text-3xl font-bold text-white">
+                  Kolam<span className="text-orange-500">Prosper</span>
+                </h1>
+                <span className="text-xs text-gray-300 -mt-1 text-center">كولام بروسبر</span>
+              </div>
             </Link>
           </div>
 
@@ -55,7 +58,7 @@ export default function Navigation() {
               </Link>
             ))}
             <Link
-              href="https://app.kolamprosper.com"
+              href="https://app.kol.am"
               target="_blank"
               rel="noopener noreferrer"
               className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
@@ -118,7 +121,7 @@ export default function Navigation() {
               </Link>
             ))}
             <Link
-              href="https://app.kolamprosper.com"
+              href="https://app.kol.am"
               target="_blank"
               rel="noopener noreferrer"
               className="block px-3 py-2 mt-4 text-center bg-orange-500 hover:bg-orange-600 text-white rounded-md text-base font-medium"
@@ -132,5 +135,4 @@ export default function Navigation() {
     </nav>
   )
 }
-
 
