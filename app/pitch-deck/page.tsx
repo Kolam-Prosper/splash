@@ -145,7 +145,7 @@ export default function PitchDeck() {
           ],
         },
         {
-          title: "✅ Integration for On/Off Ramping",
+          title: "WIP  Integration for On/Off Ramping",
           items: [
             "Partnering with Moneygram to facilitate seamless fiat-to-crypto transactions",
             "Enabling fast and low-cost remittances for underbanked users in developing nations",
@@ -153,7 +153,7 @@ export default function PitchDeck() {
           ],
         },
         {
-          title: "🔜 Upcoming Milestones:",
+          title: " Upcoming Milestones:",
           items: [
             "Audits and Mainnet launch with full staking and lending functionality",
             "Regulatory approvals and compliance where applicable",
