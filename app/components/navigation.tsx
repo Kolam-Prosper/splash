@@ -22,6 +22,7 @@ export default function Navigation() {
     { name: "Home", path: "/" },
     { name: "White Paper", path: "/whitepaper" },
     { name: "Pitch Deck", path: "/pitch-deck" },
+    { name: "Tokenomics", path: "/tokenomics" },
   ]
 
   return (
@@ -131,4 +132,5 @@ export default function Navigation() {
     </nav>
   )
 }
+
 
