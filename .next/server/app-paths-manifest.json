@@ -1,0 +1,12 @@
+{
+  "/_not-found/page": "app/_not-found/page.js",
+  "/dapp/page": "app/dapp/page.js",
+  "/dapp/property-deeds/page": "app/dapp/property-deeds/page.js",
+  "/dapp/staking/page": "app/dapp/staking/page.js",
+  "/dapp/t-bonds/page": "app/dapp/t-bonds/page.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/page": "app/page.js",
+  "/pitch-deck/page": "app/pitch-deck/page.js",
+  "/tokenomics/page": "app/tokenomics/page.js",
+  "/whitepaper/page": "app/whitepaper/page.js"
+}

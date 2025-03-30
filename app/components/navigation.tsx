@@ -25,6 +25,9 @@ export default function Navigation() {
     { name: "Tokenomics", path: "/tokenomics" },
   ]
 
+  // For local development
+  const dAppUrl = "/dapp"
+
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -58,9 +61,7 @@ export default function Navigation() {
               </Link>
             ))}
             <Link
-              href="https://app.kol.am"
-              target="_blank"
-              rel="noopener noreferrer"
+              href={dAppUrl}
               className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
             >
               Launch App
@@ -121,9 +122,7 @@ export default function Navigation() {
               </Link>
             ))}
             <Link
-              href="https://app.kol.am"
-              target="_blank"
-              rel="noopener noreferrer"
+              href={dAppUrl}
               className="block px-3 py-2 mt-4 text-center bg-orange-500 hover:bg-orange-600 text-white rounded-md text-base font-medium"
               onClick={() => setMobileMenuOpen(false)}
             >

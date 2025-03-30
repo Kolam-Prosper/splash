@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 23, "column": 0}, "map": {"version":3,"sources":["turbopack:///[project]/middleware.ts"],"sourcesContent":["import { NextResponse } from \"next/server\"\r\nimport type { NextRequest } from \"next/server\"\r\n\r\nexport function middleware(request: NextRequest) {\r\n  // Clone the request headers\r\n  const requestHeaders = new Headers(request.headers)\r\n\r\n  // Add the pathname to the request headers\r\n  requestHeaders.set(\"x-pathname\", request.nextUrl.pathname)\r\n\r\n  // Return the response with the modified headers\r\n  return NextResponse.next({\r\n    request: {\r\n      headers: requestHeaders,\r\n    },\r\n  })\r\n}\r\n\r\nexport const config = {\r\n  matcher: \"/((?!api|_next/static|_next/image|favicon.ico).*)\",\r\n}\r\n\r\n"],"names":[],"mappings":";;;;AAAA;AAAA;;AAGO,SAAS,WAAW,OAAoB;IAC7C,4BAA4B;IAC5B,MAAM,iBAAiB,IAAI,QAAQ,QAAQ,OAAO;IAElD,0CAA0C;IAC1C,eAAe,GAAG,CAAC,cAAc,QAAQ,OAAO,CAAC,QAAQ;IAEzD,gDAAgD;IAChD,OAAO,6LAAA,CAAA,eAAY,CAAC,IAAI,CAAC;QACvB,SAAS;YACP,SAAS;QACX;IACF;AACF;AAEO,MAAM,SAAS;IACpB,SAAS;AACX"}}]
+}

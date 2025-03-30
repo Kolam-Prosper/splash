@@ -1,50 +1,45 @@
-import Image from "next/image"
 import Link from "next/link"
 
 export default function Home() {
+  // For local development
+  const dAppUrl = "/dapp"
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center relative overflow-hidden">
-      {/* Background SVG */}
-      <div className="absolute inset-0 z-0">
-        <Image src="/network-bg.svg" alt="Network Background" fill priority className="object-cover" />
-      </div>
+    <div className="min-h-screen bg-black text-white">
+      {/* Hero Section */}
+      <main className="container mx-auto px-4 flex flex-col items-center justify-center text-center py-20 relative min-h-[calc(100vh-80px)]">
+        {/* Background with increased opacity */}
+        <div className="absolute inset-0 bg-[url('/network-bg.svg')] bg-no-repeat bg-center opacity-50 z-0"></div>
 
-      {/* Content */}
-      <div className="z-10 max-w-5xl w-full text-center px-6 py-24">
-        <div className="inline-block mb-4 px-3 py-1 bg-black/50 backdrop-blur-sm rounded-full">
-          <p className="text-sm font-medium text-orange-500">Blockchain Technology</p>
+        <div className="z-10 max-w-3xl">
+          <h1 className="text-4xl md:text-6xl font-bold mb-4">
+            Revolutionizing Finance
+            <br />
+            <span className="text-orange-500">Through Tokenization</span>
+          </h1>
+
+          <p className="text-gray-300 mb-8 text-lg">
+            Tokenized T-bonds and property deeds with secure staking and non-liquidating loan options. Unlock the
+            potential of real-world assets on the blockchain.
+          </p>
+
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link
+              href={dAppUrl}
+              className="bg-orange-600 hover:bg-orange-700 text-white px-6 py-2 rounded-md inline-flex items-center justify-center"
+            >
+              Launch App
+            </Link>
+            <Link
+              href="/learn-more"
+              className="border border-white hover:bg-white/10 text-white px-6 py-2 rounded-md inline-flex items-center justify-center"
+            >
+              Learn More
+            </Link>
+          </div>
         </div>
-
-        <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
-          Revolutionizing Finance
-          <br />
-          <span className="text-orange-500">Through Tokenization</span>
-        </h1>
-
-        <p className="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto mb-10">
-          Tokenized T-bonds and property deeds with secure staking and non-fluctuating loan options. Unlock the
-          potential of real-world assets on the blockchain.
-        </p>
-
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Link
-            href="https://app.kolamprosper.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-md text-lg font-medium transition-colors inline-block"
-          >
-            Launch App
-          </Link>
-
-          <Link
-            href="#learn-more"
-            className="bg-transparent border border-white hover:border-orange-500 text-white hover:text-orange-500 px-6 py-3 rounded-md text-lg font-medium transition-colors inline-block"
-          >
-            Learn More →
-          </Link>
-        </div>
-      </div>
-    </main>
+      </main>
+    </div>
   )
 }
 

@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 7, "column": 0}, "map": {"version":3,"sources":["file://C%3A/Users/USER/splash/app/dapp/layout.tsx"],"sourcesContent":["import type React from \"react\"\r\nimport type { Metadata } from \"next\"\r\nimport { Inter } from \"next/font/google\"\r\nimport \"../globals.css\"\r\n\r\nconst inter = Inter({ subsets: [\"latin\"] })\r\n\r\nexport const metadata: Metadata = {\r\n  title: \"KolamProsper dApp\",\r\n  description: \"Tokenized T-bonds and property deeds with secure staking and non-liquidating loan options\",\r\n}\r\n\r\nexport default function DAppLayout({\r\n  children,\r\n}: {\r\n  children: React.ReactNode\r\n}) {\r\n  return (\r\n    <html lang=\"en\" suppressHydrationWarning>\r\n      <body className={inter.className}>\r\n        <div className=\"min-h-screen bg-gradient-to-b from-black to-gray-900 text-white\">{children}</div>\r\n      </body>\r\n    </html>\r\n  )\r\n}\r\n\r\n"],"names":[],"mappings":";;;;;;;;;AAOO,MAAM,WAAqB;IAChC,OAAO;IACP,aAAa;AACf;AAEe,SAAS,WAAW,EACjC,QAAQ,EAGT;IACC,qBACE,8OAAC;QAAK,MAAK;QAAK,wBAAwB;kBACtC,cAAA,8OAAC;YAAK,WAAW,yIAAA,CAAA,UAAK,CAAC,SAAS;sBAC9B,cAAA,8OAAC;gBAAI,WAAU;0BAAmE;;;;;;;;;;;;;;;;AAI1F","debugId":null}}]
+}

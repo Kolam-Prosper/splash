@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 7, "column": 0}, "map": {"version":3,"sources":["file://C%3A/Users/USER/splash/app/dapp/providers.tsx"],"sourcesContent":["\"use client\"\r\n\r\nimport type React from \"react\"\r\n\r\ninterface ProvidersProps {\r\n  children: React.ReactNode\r\n}\r\n\r\nexport function Providers({ children }: ProvidersProps) {\r\n  // This component should only provide context providers, not layout components\r\n  return <>{children}</>\r\n}\r\n\r\n"],"names":[],"mappings":";;;;AAAA;;AAQO,SAAS,UAAU,EAAE,QAAQ,EAAkB;IACpD,8EAA8E;IAC9E,qBAAO;kBAAG;;AACZ","debugId":null}}]
+}
