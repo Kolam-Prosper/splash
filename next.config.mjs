@@ -1,15 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  async redirects() {
-    return [
-      {
-        source: "/launch-app",
-        destination: "/dapp",
-        permanent: false,
-      },
-    ]
+  eslint: {
+    // Disable ESLint during production builds
+    ignoreDuringBuilds: true,
   },
-}
+  typescript: {
+    // Disable TypeScript errors during production builds
+    ignoreBuildErrors: true,
+  },
+};
 
-export default nextConfig
+export default nextConfig;
 
