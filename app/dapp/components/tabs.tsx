@@ -1,125 +1,77 @@
 "use client"
 
-import * as React from "react"
+import React, { useState } from "react"
 
-interface TabsProps extends React.HTMLAttributes<HTMLDivElement> {
-  defaultValue: string
-  value?: string
-  onValueChange?: (value: string) => void
+interface TabProps {
+  label: string
+  content: React.ReactElement
 }
 
-const Tabs = React.forwardRef<HTMLDivElement, TabsProps>(
-  ({ defaultValue, value, onValueChange, children, className, ...props }, ref) => {
-    const [selectedValue, setSelectedValue] = React.useState(value || defaultValue)
+interface TabsProps {
+  children: React.ReactElement<TabProps> | React.ReactElement<TabProps>[]
+}
 
-    React.useEffect(() => {
-      if (value !== undefined) {
-        setSelectedValue(value)
-      }
-    }, [value])
+const Tabs: React.FC<TabsProps> = ({ children }) => {
+  const [activeTab, setActiveTab] = useState<string>(React.Children.toArray(children)[0]?.props.label || "")
 
-    const handleValueChange = React.useCallback(
-      (newValue: string) => {
-        setSelectedValue(newValue)
-        onValueChange?.(newValue)
-      },
-      [onValueChange],
-    )
+  const onClickTabItem = (tab: string) => {
+    setActiveTab(tab)
+  }
 
-    return (
-      <div ref={ref} className={className} {...props}>
+  return (
+    <div className="tabs">
+      <ol className="tab-list">
         {React.Children.map(children, (child) => {
-          if (React.isValidElement(child)) {
-            return React.cloneElement(child as React.ReactElement<any>, {
-              selectedValue,
-              onValueChange: handleValueChange,
-            })
+          if (!React.isValidElement(child)) {
+            return null
           }
-          return child
+          return <Tab activeTab={activeTab} label={child.props.label} onClick={onClickTabItem} />
+        })}
+      </ol>
+      <div className="tab-content">
+        {React.Children.map(children, (child) => {
+          if (!React.isValidElement(child)) {
+            return null
+          }
+          if (child.props.label !== activeTab) return undefined
+          return child.props.content
         })}
       </div>
-    )
-  },
-)
-Tabs.displayName = "Tabs"
-
-interface TabsListProps extends React.HTMLAttributes<HTMLDivElement> {
-  selectedValue?: string
-  onValueChange?: (value: string) => void
+    </div>
+  )
 }
 
-const TabsList = React.forwardRef<HTMLDivElement, TabsListProps>(
-  ({ selectedValue, onValueChange, children, className, ...props }, ref) => {
-    return (
-      <div
-        ref={ref}
-        className={`inline-flex h-10 items-center justify-center rounded-md bg-gray-900/50 p-1 text-gray-400 ${className}`}
-        {...props}
-      >
-        {React.Children.map(children, (child) => {
-          if (React.isValidElement(child)) {
-            return React.cloneElement(child as React.ReactElement<any>, {
-              selectedValue,
-              onValueChange,
-            })
-          }
-          return child
-        })}
-      </div>
-    )
-  },
-)
-TabsList.displayName = "TabsList"
-
-interface TabsTriggerProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  value: string
-  selectedValue?: string
-  onValueChange?: (value: string) => void
+interface TabItemProps {
+  children: React.ReactNode
 }
 
-const TabsTrigger = React.forwardRef<HTMLButtonElement, TabsTriggerProps>(
-  ({ value, selectedValue, onValueChange, children, className, ...props }, ref) => {
-    const isSelected = selectedValue === value
-
-    return (
-      <button
-        ref={ref}
-        className={`inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium transition-all focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 ${
-          isSelected ? "bg-gray-800 text-white shadow-sm" : "text-gray-400 hover:text-gray-100"
-        } ${className}`}
-        onClick={() => onValueChange?.(value)}
-        {...props}
-      >
-        {children}
-      </button>
-    )
-  },
-)
-TabsTrigger.displayName = "TabsTrigger"
-
-interface TabsContentProps extends React.HTMLAttributes<HTMLDivElement> {
-  value: string
-  selectedValue?: string
+export const TabItem: React.FC<TabItemProps> = ({ children }) => {
+  return <>{children}</>
 }
 
-const TabsContent = React.forwardRef<HTMLDivElement, TabsContentProps>(
-  ({ value, selectedValue, children, className, ...props }, ref) => {
-    if (value !== selectedValue) {
-      return null
-    }
+interface TabProps {
+  activeTab: string
+  label: string
+  onClick: (tab: string) => void
+}
 
-    return (
-      <div
-        ref={ref}
-        className={`mt-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${className}`}
-        {...props}
-      >
-        {children}
-      </div>
-    )
-  },
-)
-TabsContent.displayName = "TabsContent"
+const Tab: React.FC<TabProps> = ({ activeTab, label, onClick }) => {
+  const onClickTab = () => {
+    onClick(label)
+  }
 
-export { Tabs, TabsList, TabsTrigger, TabsContent }
+  let className = "tab-list-item"
+
+  if (activeTab === label) {
+    className += " tab-list-active"
+  }
+
+  return (
+    <li className={className} onClick={onClickTab}>
+      {label}
+    </li>
+  )
+}
+
+export default Tabs
 

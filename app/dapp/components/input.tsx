@@ -1,18 +1,51 @@
-import * as React from "react"
+"use client"
 
-export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {}
+import type React from "react"
 
-const Input = React.forwardRef<HTMLInputElement, InputProps>(({ className, type, ...props }, ref) => {
+interface InputProps {
+  label?: string
+  type?: string
+  placeholder?: string
+  value?: string | number | readonly string[] | undefined
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
+  name?: string
+  required?: boolean
+  disabled?: boolean
+  error?: string | undefined
+  className?: string
+}
+
+const Input: React.FC<InputProps> = ({
+  label,
+  type = "text",
+  placeholder,
+  value,
+  onChange,
+  name,
+  required,
+  disabled,
+  error,
+  className,
+}) => {
   return (
-    <input
-      type={type}
-      className={`flex h-10 w-full rounded-md border border-white/10 bg-gray-900/70 px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500/50 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 ${className}`}
-      ref={ref}
-      {...props}
-    />
+    <div className={className}>
+      {label && <label htmlFor={name}>{label}</label>}
+      <input
+        type={type}
+        placeholder={placeholder}
+        value={value}
+        onChange={onChange}
+        name={name}
+        required={required}
+        disabled={disabled}
+        className={`border rounded px-3 py-2 w-full focus:outline-none focus:ring focus:border-blue-500 ${
+          error ? "border-red-500" : ""
+        }`}
+      />
+      {error && <p className="text-red-500 text-sm">{error}</p>}
+    </div>
   )
-})
-Input.displayName = "Input"
+}
 
-export { Input }
+export default Input
 

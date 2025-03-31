@@ -32,8 +32,8 @@ export default function Whitepaper() {
             </ul>
             <div className="mt-8 p-4 bg-gray-800 rounded-md">
               <p className="italic text-gray-300">
-                "Our mission is to democratize access to real estate investment and create a more inclusive financial
-                ecosystem through blockchain technology."
+                &quot;Our mission is to democratize access to real estate investment and create a more inclusive
+                financial ecosystem through blockchain technology.&quot;
               </p>
             </div>
           </div>

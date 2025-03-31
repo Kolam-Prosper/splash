@@ -1,45 +1,113 @@
-import Link from "next/link"
+"use client"
 
-export default function Home() {
-  // For local development
-  const dAppUrl = "/dapp"
+import { useState, useEffect } from "react"
+import { ethers } from "ethers"
+
+const Dapp = () => {
+  const [account, setAccount] = useState<string | null>(null)
+  const [balance, setBalance] = useState<string | null>(null)
+  const [isConnected, setIsConnected] = useState(false)
+
+  useEffect(() => {
+    checkConnection()
+  }, [])
+
+  const checkConnection = async () => {
+    if (window.ethereum) {
+      try {
+        const accounts = await window.ethereum.request({ method: "eth_accounts" })
+        if (accounts.length > 0) {
+          setAccount(accounts[0])
+          await updateBalance(accounts[0])
+          setIsConnected(true)
+        } else {
+          console.log("No account connected")
+          setIsConnected(false)
+        }
+      } catch (error) {
+        console.error("Error checking connection:", error)
+        setIsConnected(false)
+      }
+    } else {
+      console.log("Metamask not detected")
+      setIsConnected(false)
+    }
+  }
+
+  const connectWallet = async () => {
+    if (window.ethereum) {
+      try {
+        const accounts = await window.ethereum.request({ method: "eth_requestAccounts" })
+        setAccount(accounts[0])
+        await updateBalance(accounts[0])
+        setIsConnected(true)
+      } catch (error) {
+        console.error("Error connecting wallet:", error)
+        setIsConnected(false)
+      }
+    } else {
+      console.log("Metamask not detected")
+      setIsConnected(false)
+    }
+  }
+
+  const updateBalance = async (currentAccount: string) => {
+    if (window.ethereum && currentAccount) {
+      try {
+        const provider = new ethers.providers.Web3Provider(window.ethereum)
+        const balance = await provider.getBalance(currentAccount)
+        setBalance(ethers.utils.formatEther(balance))
+      } catch (error) {
+        console.error("Error getting balance:", error)
+        setBalance(null)
+      }
+    } else {
+      setBalance(null)
+    }
+  }
+
+  useEffect(() => {
+    if (account) {
+      updateBalance(account)
+    }
+  }, [account])
+
+  window.ethereum?.on("accountsChanged", async (accounts: string[]) => {
+    if (accounts.length > 0) {
+      setAccount(accounts[0])
+      await updateBalance(accounts[0])
+      setIsConnected(true)
+    } else {
+      setAccount(null)
+      setBalance(null)
+      setIsConnected(false)
+    }
+  })
+
+  window.ethereum?.on("chainChanged", (_chainId: string) => {
+    window.location.reload()
+  })
 
   return (
-    <div className="min-h-screen bg-black text-white">
-      {/* Hero Section */}
-      <main className="container mx-auto px-4 flex flex-col items-center justify-center text-center py-20 relative min-h-[calc(100vh-80px)]">
-        {/* Background with increased opacity */}
-        <div className="absolute inset-0 bg-[url('/network-bg.svg')] bg-no-repeat bg-center opacity-50 z-0"></div>
+    <div className="container mx-auto p-4">
+      <h1 className="text-2xl font-bold mb-4">Decentralized App</h1>
 
-        <div className="z-10 max-w-3xl">
-          <h1 className="text-4xl md:text-6xl font-bold mb-4">
-            Revolutionizing Finance
-            <br />
-            <span className="text-orange-500">Through Tokenization</span>
-          </h1>
-
-          <p className="text-gray-300 mb-8 text-lg">
-            Tokenized T-bonds and property deeds with secure staking and non-liquidating loan options. Unlock the
-            potential of real-world assets on the blockchain.
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              href={dAppUrl}
-              className="bg-orange-600 hover:bg-orange-700 text-white px-6 py-2 rounded-md inline-flex items-center justify-center"
-            >
-              Launch App
-            </Link>
-            <Link
-              href="/learn-more"
-              className="border border-white hover:bg-white/10 text-white px-6 py-2 rounded-md inline-flex items-center justify-center"
-            >
-              Learn More
-            </Link>
-          </div>
+      {isConnected ? (
+        <div>
+          <p>Account: {account}</p>
+          <p>Balance: {balance} ETH</p>
         </div>
-      </main>
+      ) : (
+        <button
+          onClick={connectWallet}
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        >
+          Connect Wallet
+        </button>
+      )}
     </div>
   )
 }
+
+export default Dapp
 
