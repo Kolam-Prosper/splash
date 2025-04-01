@@ -1,113 +1,105 @@
-"use client"
+import Link from "next/link"
+import { ArrowRight } from "lucide-react"
+import { Button } from "@/components/ui/button"
 
-import { useState, useEffect } from "react"
-import { ethers } from "ethers"
-
-const Dapp = () => {
-  const [account, setAccount] = useState<string | null>(null)
-  const [balance, setBalance] = useState<string | null>(null)
-  const [isConnected, setIsConnected] = useState(false)
-
-  useEffect(() => {
-    checkConnection()
-  }, [])
-
-  const checkConnection = async () => {
-    if (window.ethereum) {
-      try {
-        const accounts = await window.ethereum.request({ method: "eth_accounts" })
-        if (accounts.length > 0) {
-          setAccount(accounts[0])
-          await updateBalance(accounts[0])
-          setIsConnected(true)
-        } else {
-          console.log("No account connected")
-          setIsConnected(false)
-        }
-      } catch (error) {
-        console.error("Error checking connection:", error)
-        setIsConnected(false)
-      }
-    } else {
-      console.log("Metamask not detected")
-      setIsConnected(false)
-    }
-  }
-
-  const connectWallet = async () => {
-    if (window.ethereum) {
-      try {
-        const accounts = await window.ethereum.request({ method: "eth_requestAccounts" })
-        setAccount(accounts[0])
-        await updateBalance(accounts[0])
-        setIsConnected(true)
-      } catch (error) {
-        console.error("Error connecting wallet:", error)
-        setIsConnected(false)
-      }
-    } else {
-      console.log("Metamask not detected")
-      setIsConnected(false)
-    }
-  }
-
-  const updateBalance = async (currentAccount: string) => {
-    if (window.ethereum && currentAccount) {
-      try {
-        const provider = new ethers.providers.Web3Provider(window.ethereum)
-        const balance = await provider.getBalance(currentAccount)
-        setBalance(ethers.utils.formatEther(balance))
-      } catch (error) {
-        console.error("Error getting balance:", error)
-        setBalance(null)
-      }
-    } else {
-      setBalance(null)
-    }
-  }
-
-  useEffect(() => {
-    if (account) {
-      updateBalance(account)
-    }
-  }, [account])
-
-  window.ethereum?.on("accountsChanged", async (accounts: string[]) => {
-    if (accounts.length > 0) {
-      setAccount(accounts[0])
-      await updateBalance(accounts[0])
-      setIsConnected(true)
-    } else {
-      setAccount(null)
-      setBalance(null)
-      setIsConnected(false)
-    }
-  })
-
-  window.ethereum?.on("chainChanged", (_chainId: string) => {
-    window.location.reload()
-  })
-
+export default function Home() {
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Decentralized App</h1>
+    <div className="min-h-screen bg-black text-white">
+      <div className="container mx-auto px-4 py-16">
+        <header className="flex justify-between items-center mb-16">
+          <div className="flex items-center space-x-2">
+            <div className="w-10 h-10 rounded-full bg-orange-500"></div>
+            <span className="font-bold text-2xl">Kolam Prosper</span>
+          </div>
+          <nav className="hidden md:flex space-x-8">
+            <Link href="/whitepaper" className="hover:text-orange-500 transition-colors">
+              Whitepaper
+            </Link>
+            <Link href="/pitch-deck" className="hover:text-orange-500 transition-colors">
+              Pitch Deck
+            </Link>
+            <Link href="/dapp" className="hover:text-orange-500 transition-colors">
+              dApp
+            </Link>
+          </nav>
+        </header>
 
-      {isConnected ? (
-        <div>
-          <p>Account: {account}</p>
-          <p>Balance: {balance} ETH</p>
-        </div>
-      ) : (
-        <button
-          onClick={connectWallet}
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        >
-          Connect Wallet
-        </button>
-      )}
+        <main className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <div>
+            <h1 className="text-5xl font-bold mb-6">
+              Democratizing Access to <span className="text-orange-500">Real Estate</span> and{" "}
+              <span className="text-orange-500">T-Bonds</span>
+            </h1>
+            <p className="text-xl text-gray-300 mb-8">
+              Kolam Prosper is a blockchain-based platform that enables fractional ownership of real estate and
+              tokenized treasury bonds, making premium investments accessible to everyone.
+            </p>
+            <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+              <Link href="/dapp">
+                <Button size="lg" className="w-full sm:w-auto">
+                  Launch dApp
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </Link>
+              <Link href="/whitepaper">
+                <Button variant="outline" size="lg" className="w-full sm:w-auto">
+                  Read Whitepaper
+                </Button>
+              </Link>
+            </div>
+          </div>
+          <div className="relative">
+            <div className="aspect-square bg-gradient-to-br from-orange-500/20 to-purple-500/20 rounded-3xl p-8 flex items-center justify-center">
+              <img
+                src="/placeholder.svg?height=400&width=400"
+                alt="Kolam Prosper Platform"
+                className="max-w-full rounded-2xl"
+              />
+            </div>
+            <div className="absolute -bottom-8 -right-8 bg-black/80 backdrop-blur-sm p-4 rounded-xl border border-gray-800">
+              <div className="text-sm font-medium mb-1">Total Value Locked</div>
+              <div className="text-2xl font-bold text-orange-500">$24.5M</div>
+            </div>
+          </div>
+        </main>
+
+        <section className="mt-32">
+          <h2 className="text-3xl font-bold text-center mb-16">How It Works</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="bg-gray-900/50 backdrop-blur-sm p-6 rounded-xl border border-gray-800">
+              <div className="w-12 h-12 bg-orange-500/20 rounded-full flex items-center justify-center text-orange-500 mb-4">
+                1
+              </div>
+              <h3 className="text-xl font-bold mb-3">Tokenized Assets</h3>
+              <p className="text-gray-300">
+                Real estate properties and treasury bonds are tokenized on the blockchain, creating fractional ownership
+                opportunities.
+              </p>
+            </div>
+            <div className="bg-gray-900/50 backdrop-blur-sm p-6 rounded-xl border border-gray-800">
+              <div className="w-12 h-12 bg-orange-500/20 rounded-full flex items-center justify-center text-orange-500 mb-4">
+                2
+              </div>
+              <h3 className="text-xl font-bold mb-3">Invest & Earn</h3>
+              <p className="text-gray-300">
+                Purchase tokens representing ownership in premium assets and earn passive income through rent and
+                interest payments.
+              </p>
+            </div>
+            <div className="bg-gray-900/50 backdrop-blur-sm p-6 rounded-xl border border-gray-800">
+              <div className="w-12 h-12 bg-orange-500/20 rounded-full flex items-center justify-center text-orange-500 mb-4">
+                3
+              </div>
+              <h3 className="text-xl font-bold mb-3">Trade & Liquidate</h3>
+              <p className="text-gray-300">
+                Easily trade your tokens on our marketplace or use them as collateral for loans without selling your
+                assets.
+              </p>
+            </div>
+          </div>
+        </section>
+      </div>
     </div>
   )
 }
-
-export default Dapp
 

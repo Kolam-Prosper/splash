@@ -1,90 +1,172 @@
 "use client"
 
 import { useState } from "react"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../components/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/tabs"
-import { Button } from "../components/button"
-import { Badge } from "../components/badge"
-import { ArrowUpRight, Filter, TrendingUp, Clock, DollarSign, Search } from "lucide-react"
-import Image from "next/image"
+import Link from "next/link"
+import { Search, Filter, ArrowUpDown, Globe, Calendar, Percent, DollarSign, TrendingUp } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardFooter } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 export default function TBondsPage() {
   const [searchQuery, setSearchQuery] = useState("")
 
-  // Filter bonds based on search query
-  const filteredBonds = tBonds.filter(
+  // Sample bond data
+  const bonds = [
+    {
+      id: "bond-001",
+      name: "US 5-Year Treasury Bond",
+      issuer: "United States Treasury",
+      country: "United States",
+      yield: "4.5%",
+      price: "$103.42",
+      maturity: "5 years",
+      change: "+2.3%",
+      type: "Government",
+      image: "/placeholder.svg?height=200&width=300",
+    },
+    {
+      id: "bond-002",
+      name: "UAE 2-Year Sukuk",
+      issuer: "UAE Ministry of Finance",
+      country: "United Arab Emirates",
+      yield: "3.7%",
+      price: "$99.85",
+      maturity: "2 years",
+      change: "+0.8%",
+      type: "Sukuk",
+      image: "/placeholder.svg?height=200&width=300",
+    },
+    {
+      id: "bond-003",
+      name: "Singapore 10-Year Bond",
+      issuer: "Monetary Authority of Singapore",
+      country: "Singapore",
+      yield: "5.2%",
+      price: "$108.16",
+      maturity: "10 years",
+      change: "-0.5%",
+      type: "Government",
+      image: "/placeholder.svg?height=200&width=300",
+    },
+    {
+      id: "bond-004",
+      name: "UK 3-Year Gilt",
+      issuer: "UK Debt Management Office",
+      country: "United Kingdom",
+      yield: "4.1%",
+      price: "$101.75",
+      maturity: "3 years",
+      change: "+1.2%",
+      type: "Government",
+      image: "/placeholder.svg?height=200&width=300",
+    },
+    {
+      id: "bond-005",
+      name: "Japan 7-Year Bond",
+      issuer: "Ministry of Finance Japan",
+      country: "Japan",
+      yield: "2.8%",
+      price: "$98.60",
+      maturity: "7 years",
+      change: "+0.3%",
+      type: "Government",
+      image: "/placeholder.svg?height=200&width=300",
+    },
+    {
+      id: "bond-006",
+      name: "Germany 5-Year Bund",
+      issuer: "German Finance Agency",
+      country: "Germany",
+      yield: "3.5%",
+      price: "$102.20",
+      maturity: "5 years",
+      change: "-0.2%",
+      type: "Government",
+      image: "/placeholder.svg?height=200&width=300",
+    },
+  ]
+
+  const filteredBonds = bonds.filter(
     (bond) =>
-      bond.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      bond.issuer.toLowerCase().includes(searchQuery.toLowerCase()),
+      bond.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      bond.issuer.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      bond.country.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      bond.type.toLowerCase().includes(searchQuery.toLowerCase()),
   )
 
   return (
-    <div className="space-y-6 pt-4">
-      <div>
-        <h1 className="text-3xl font-bold">T-Bonds</h1>
-        <p className="text-gray-400 mt-1">Tokenized treasury bonds with secure government backing</p>
-      </div>
-
-      {/* Filter and Search */}
-      <div className="flex flex-col sm:flex-row gap-4 justify-between">
-        <div className="relative w-full sm:max-w-xs">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-          <input
-            type="text"
-            placeholder="Search bonds..."
-            className="w-full pl-10 py-2 bg-gray-900/70 border border-white/10 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500/50"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
+    <div className="container mx-auto p-6 space-y-8">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div>
+          <h1 className="text-3xl font-bold">Treasury Bonds</h1>
+          <p className="text-gray-400 mt-1">Tokenized government bonds with competitive yields</p>
         </div>
-        <Button variant="outline" className="border-white/20 text-white hover:bg-white/10">
-          <Filter className="mr-2 h-4 w-4" /> Filter
-        </Button>
+
+        <div className="flex items-center gap-2">
+          <Button variant="outline" size="sm">
+            <Filter className="h-4 w-4 mr-2" />
+            Filter
+          </Button>
+          <Button variant="outline" size="sm">
+            <ArrowUpDown className="h-4 w-4 mr-2" />
+            Sort
+          </Button>
+        </div>
       </div>
 
-      {/* T-Bond Categories */}
-      <Tabs defaultValue="all" className="w-full">
-        <TabsList className="grid grid-cols-4 max-w-lg bg-gray-900/50 p-1">
-          <TabsTrigger value="all">All Bonds</TabsTrigger>
-          <TabsTrigger value="us">US Treasury</TabsTrigger>
-          <TabsTrigger value="intl">International</TabsTrigger>
-          <TabsTrigger value="sovereign">Sovereign</TabsTrigger>
+      <div className="relative">
+        <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+        <Input
+          placeholder="Search by name, issuer, country, or type..."
+          className="pl-10"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+      </div>
+
+      <Tabs defaultValue="all">
+        <TabsList className="grid grid-cols-4 mb-8">
+          <TabsTrigger value="all">All</TabsTrigger>
+          <TabsTrigger value="government">Government</TabsTrigger>
+          <TabsTrigger value="sukuk">Sukuk</TabsTrigger>
+          <TabsTrigger value="corporate">Corporate</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="all" className="mt-6">
+        <TabsContent value="all" className="mt-0">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredBonds.map((bond, index) => (
-              <TBondCard key={index} {...bond} />
+            {filteredBonds.map((bond) => (
+              <BondCard key={bond.id} bond={bond} />
             ))}
           </div>
         </TabsContent>
 
-        <TabsContent value="us" className="mt-6">
+        <TabsContent value="government" className="mt-0">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredBonds
-              .filter((bond) => bond.category === "us")
-              .map((bond, index) => (
-                <TBondCard key={index} {...bond} />
+              .filter((b) => b.type === "Government")
+              .map((bond) => (
+                <BondCard key={bond.id} bond={bond} />
               ))}
           </div>
         </TabsContent>
 
-        <TabsContent value="intl" className="mt-6">
+        <TabsContent value="sukuk" className="mt-0">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredBonds
-              .filter((bond) => bond.category === "intl")
-              .map((bond, index) => (
-                <TBondCard key={index} {...bond} />
+              .filter((b) => b.type === "Sukuk")
+              .map((bond) => (
+                <BondCard key={bond.id} bond={bond} />
               ))}
           </div>
         </TabsContent>
 
-        <TabsContent value="sovereign" className="mt-6">
+        <TabsContent value="corporate" className="mt-0">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredBonds
-              .filter((bond) => bond.category === "sovereign")
-              .map((bond, index) => (
-                <TBondCard key={index} {...bond} />
+              .filter((b) => b.type === "Corporate")
+              .map((bond) => (
+                <BondCard key={bond.id} bond={bond} />
               ))}
           </div>
         </TabsContent>
@@ -93,157 +175,72 @@ export default function TBondsPage() {
   )
 }
 
-interface TBondCardProps {
-  title: string
-  issuer: string
-  imageUrl: string
-  price: string
-  apy: string
-  maturity: string
-  minInvestment: string
-  isPopular?: boolean
-  category: string
-  description: string
+interface BondCardProps {
+  bond: {
+    id: string
+    name: string
+    issuer: string
+    country: string
+    yield: string
+    price: string
+    maturity: string
+    change: string
+    type: string
+    image: string
+  }
 }
 
-function TBondCard({
-  title,
-  issuer,
-  imageUrl,
-  price,
-  apy,
-  maturity,
-  minInvestment,
-  isPopular = false,
-  description,
-}: TBondCardProps) {
+function BondCard({ bond }: BondCardProps) {
+  const isPositive = bond.change.startsWith("+")
+
   return (
-    <Card className="overflow-hidden border border-white/10 bg-black/40 backdrop-blur-sm transition-all hover:border-orange-500/50 hover:shadow-[0_0_15px_rgba(255,107,0,0.15)]">
-      <div className="relative h-40 w-full overflow-hidden">
-        <Image
-          src={imageUrl || "/placeholder.svg?height=160&width=400"}
-          alt={title}
-          fill
-          className="object-cover transition-transform duration-500 hover:scale-105"
-        />
-        {isPopular && <Badge className="absolute right-2 top-2 bg-orange-500 text-white">Popular</Badge>}
+    <Card className="overflow-hidden bg-black/40 backdrop-blur-sm border-white/10">
+      <div className="relative h-48">
+        <img src={bond.image || "/placeholder.svg"} alt={bond.name} className="w-full h-full object-cover" />
+        <div className="absolute top-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-xs">{bond.type}</div>
       </div>
-      <CardHeader className="pb-2">
-        <CardTitle>{title}</CardTitle>
-        <CardDescription>{issuer}</CardDescription>
-      </CardHeader>
-      <CardContent className="pb-4">
-        <p className="text-sm text-gray-400 mb-4">{description}</p>
 
-        <div className="flex justify-between items-center mb-3">
-          <div className="text-sm text-gray-400">Current Price</div>
-          <div className="font-medium">{price}</div>
+      <CardContent className="p-4">
+        <div className="flex justify-between items-start mb-3">
+          <h3 className="font-bold text-lg">{bond.name}</h3>
+          <div className="text-green-400 font-medium">{bond.yield}</div>
         </div>
 
-        <div className="flex justify-between items-center mb-3">
-          <div className="text-sm text-gray-400">APY</div>
-          <div className="flex items-center text-green-400">
-            <TrendingUp className="mr-1 h-4 w-4" />
-            {apy}
+        <div className="space-y-2 text-sm">
+          <div className="flex items-center text-gray-300">
+            <Globe className="h-4 w-4 mr-2 text-gray-400" />
+            {bond.country} • {bond.issuer}
           </div>
-        </div>
-
-        <div className="flex justify-between items-center mb-3">
-          <div className="text-sm text-gray-400 flex items-center">
-            <Clock className="mr-1 h-4 w-4" />
-            Maturity
+          <div className="flex items-center text-gray-300">
+            <Calendar className="h-4 w-4 mr-2 text-gray-400" />
+            Maturity: {bond.maturity}
           </div>
-          <div>{maturity}</div>
-        </div>
-
-        <div className="flex justify-between items-center">
-          <div className="text-sm text-gray-400 flex items-center">
-            <DollarSign className="mr-1 h-4 w-4" />
-            Min Investment
+          <div className="flex items-center text-gray-300">
+            <Percent className="h-4 w-4 mr-2 text-gray-400" />
+            Yield: {bond.yield}
           </div>
-          <div>{minInvestment}</div>
         </div>
       </CardContent>
-      <CardFooter className="flex justify-between pt-0">
-        <Button variant="outline" className="border-white/20 text-white hover:bg-white/10">
-          Details
-        </Button>
-        <Button className="bg-orange-600 hover:bg-orange-700 text-white">
-          Invest <ArrowUpRight className="ml-2 h-4 w-4" />
-        </Button>
+
+      <CardFooter className="p-4 pt-0 flex justify-between items-center">
+        <div className="flex items-center">
+          <DollarSign className="h-4 w-4 mr-1 text-gray-400" />
+          <span className="font-bold">{bond.price}</span>
+          <span className="text-xs text-gray-400 ml-1">per token</span>
+        </div>
+
+        <div className={`flex items-center ${isPositive ? "text-green-400" : "text-red-400"}`}>
+          <TrendingUp className="h-4 w-4 mr-1" />
+          {bond.change}
+        </div>
+
+        <Link href={`/dapp/t-bonds/${bond.id}`}>
+          <Button variant="default" size="sm">
+            View Details
+          </Button>
+        </Link>
       </CardFooter>
     </Card>
   )
 }
-
-// Sample data for T-Bonds
-const tBonds = [
-  {
-    title: "US Treasury 5-Year Bond",
-    issuer: "United States Treasury",
-    imageUrl: "/placeholder.svg?height=160&width=400",
-    price: "$103.42",
-    apy: "4.5%",
-    maturity: "5 years",
-    minInvestment: "$100",
-    isPopular: true,
-    category: "us",
-    description: "5-year US Treasury bonds with quarterly interest payments, backed by the US government.",
-  },
-  {
-    title: "US Treasury 10-Year Bond",
-    issuer: "United States Treasury",
-    imageUrl: "/placeholder.svg?height=160&width=400",
-    price: "$105.87",
-    apy: "4.8%",
-    maturity: "10 years",
-    minInvestment: "$100",
-    category: "us",
-    description: "10-year US Treasury bonds with semi-annual interest payments and long-term stability.",
-  },
-  {
-    title: "UAE Sukuk 3-Year",
-    issuer: "UAE Ministry of Finance",
-    imageUrl: "/placeholder.svg?height=160&width=400",
-    price: "$101.25",
-    apy: "3.7%",
-    maturity: "3 years",
-    minInvestment: "$200",
-    category: "sovereign",
-    description: "Sharia-compliant sovereign sukuk issued by the UAE government with predictable returns.",
-  },
-  {
-    title: "Singapore 7-Year Bond",
-    issuer: "Monetary Authority of Singapore",
-    imageUrl: "/placeholder.svg?height=160&width=400",
-    price: "$104.65",
-    apy: "4.3%",
-    maturity: "7 years",
-    minInvestment: "$250",
-    category: "intl",
-    description: "Highly-rated sovereign bonds from Singapore's central bank with competitive yields.",
-  },
-  {
-    title: "UK Gilt 2-Year",
-    issuer: "UK Treasury",
-    imageUrl: "/placeholder.svg?height=160&width=400",
-    price: "$99.85",
-    apy: "3.9%",
-    maturity: "2 years",
-    minInvestment: "$150",
-    category: "intl",
-    description: "Short-term UK government bonds with regular interest payments and low risk profile.",
-  },
-  {
-    title: "Japan 15-Year Bond",
-    issuer: "Ministry of Finance Japan",
-    imageUrl: "/placeholder.svg?height=160&width=400",
-    price: "$112.35",
-    apy: "2.8%",
-    maturity: "15 years",
-    minInvestment: "$300",
-    category: "intl",
-    description: "Long-term Japanese government bonds known for stability and regular income.",
-  },
-]
 
