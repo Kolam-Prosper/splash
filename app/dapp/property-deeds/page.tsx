@@ -1,249 +1,261 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import {
-  Box,
-  Heading,
-  Text,
-  SimpleGrid,
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  Button,
-  useToast,
-  Spinner,
-  Flex,
-  Spacer,
-  Input,
-  InputGroup,
-  InputLeftElement,
-} from "@chakra-ui/react"
-import { SearchIcon } from "@chakra-ui/icons"
-import { ethers } from "ethers"
+import { useState } from "react"
+import Link from "next/link"
+import { Search, Filter, ArrowUpDown, MapPin, User, DollarSign, Building, Home } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardFooter } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
-// Replace with your contract address and ABI
-const contractAddress = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || ""
-const contractABI = [
-  {
-    inputs: [
-      {
-        internalType: "string",
-        name: "_propertyId",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "_location",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "_ownerName",
-        type: "string",
-      },
-      {
-        internalType: "uint256",
-        name: "_price",
-        type: "uint256",
-      },
-    ],
-    name: "addProperty",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "string",
-        name: "_propertyId",
-        type: "string",
-      },
-    ],
-    name: "getProperty",
-    outputs: [
-      {
-        internalType: "string",
-        name: "",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "",
-        type: "string",
-      },
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "getPropertyCount",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    name: "properties",
-    outputs: [
-      {
-        internalType: "string",
-        name: "propertyId",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "location",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "ownerName",
-        type: "string",
-      },
-      {
-        internalType: "uint256",
-        name: "price",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-]
-
-const PropertyDeeds = () => {
-  const [properties, setProperties] = useState([])
-  const [loading, setLoading] = useState(true)
+export default function PropertyDeedsPage() {
   const [searchQuery, setSearchQuery] = useState("")
-  const toast = useToast()
 
-  useEffect(() => {
-    loadProperties()
-  }, [])
-
-  const loadProperties = async () => {
-    try {
-      setLoading(true)
-      const { ethereum } = window
-
-      if (ethereum) {
-        const provider = new ethers.providers.Web3Provider(ethereum)
-        const signer = provider.getSigner()
-        const propertyDeedsContract = new ethers.Contract(contractAddress, contractABI, signer)
-
-        const propertyCount = await propertyDeedsContract.getPropertyCount()
-        const propertyArray = []
-
-        for (let i = 0; i < propertyCount; i++) {
-          const property = await propertyDeedsContract.properties(i)
-          propertyArray.push({
-            propertyId: property.propertyId,
-            location: property.location,
-            ownerName: property.ownerName,
-            price: ethers.utils.formatEther(property.price),
-          })
-        }
-
-        setProperties(propertyArray)
-      } else {
-        console.log("Ethereum object not found")
-        toast({
-          title: "Ethereum object not found",
-          description: "Please install Metamask!",
-          status: "error",
-          duration: 5000,
-          isClosable: true,
-        })
-      }
-    } catch (error) {
-      console.error("Error loading properties:", error)
-      toast({
-        title: "Error loading properties",
-        description: error.message,
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-      })
-    } finally {
-      setLoading(false)
-    }
-  }
+  // Sample property data
+  const properties = [
+    {
+      id: "prop-001",
+      propertyId: "NYC-COM-001",
+      location: "Manhattan, New York",
+      ownerName: "Kolam Prosper DAO",
+      price: "24.18",
+      type: "Commercial",
+      image: "/placeholder.svg?height=200&width=300",
+      yield: "7.2%",
+      occupancy: "98%",
+      sqft: "12,500",
+    },
+    {
+      id: "prop-002",
+      propertyId: "DXB-RES-002",
+      location: "Dubai Marina, UAE",
+      ownerName: "Kolam Prosper DAO",
+      price: "18.32",
+      type: "Residential",
+      image: "/placeholder.svg?height=200&width=300",
+      yield: "6.8%",
+      occupancy: "92%",
+      sqft: "8,200",
+    },
+    {
+      id: "prop-003",
+      propertyId: "TKY-OFF-003",
+      location: "Shibuya, Tokyo",
+      ownerName: "Kolam Prosper DAO",
+      price: "31.45",
+      type: "Office",
+      image: "/placeholder.svg?height=200&width=300",
+      yield: "5.9%",
+      occupancy: "95%",
+      sqft: "15,800",
+    },
+    {
+      id: "prop-004",
+      propertyId: "LON-MIX-004",
+      location: "Canary Wharf, London",
+      ownerName: "Kolam Prosper DAO",
+      price: "27.65",
+      type: "Mixed Use",
+      image: "/placeholder.svg?height=200&width=300",
+      yield: "6.5%",
+      occupancy: "94%",
+      sqft: "18,300",
+    },
+    {
+      id: "prop-005",
+      propertyId: "SIN-RET-005",
+      location: "Orchard Road, Singapore",
+      ownerName: "Kolam Prosper DAO",
+      price: "22.80",
+      type: "Retail",
+      image: "/placeholder.svg?height=200&width=300",
+      yield: "7.8%",
+      occupancy: "97%",
+      sqft: "9,500",
+    },
+    {
+      id: "prop-006",
+      propertyId: "SYD-RES-006",
+      location: "Bondi Beach, Sydney",
+      ownerName: "Kolam Prosper DAO",
+      price: "19.95",
+      type: "Residential",
+      image: "/placeholder.svg?height=200&width=300",
+      yield: "6.2%",
+      occupancy: "96%",
+      sqft: "7,800",
+    },
+  ]
 
   const filteredProperties = properties.filter(
     (property) =>
       property.location.toLowerCase().includes(searchQuery.toLowerCase()) ||
       property.ownerName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      property.propertyId.toLowerCase().includes(searchQuery.toLowerCase()),
+      property.propertyId.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      property.type.toLowerCase().includes(searchQuery.toLowerCase()),
   )
 
   return (
-    <Box p={5}>
-      <Flex align="center" mb={5}>
-        <Heading as="h1" size="xl">
-          Property Deeds
-        </Heading>
-        <Spacer />
-        <InputGroup maxW="300px">
-          <InputLeftElement pointerEvents="none" children={<SearchIcon color="gray.300" />} />
-          <Input
-            placeholder="Search by location, owner, or ID"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-        </InputGroup>
-      </Flex>
+    <div className="container mx-auto p-6 space-y-8">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div>
+          <h1 className="text-3xl font-bold">Property Deeds</h1>
+          <p className="text-gray-400 mt-1">Fractional ownership in premium real estate</p>
+        </div>
 
-      {loading ? (
-        <Flex justify="center" align="center">
-          <Spinner size="xl" />
-        </Flex>
-      ) : (
-        <SimpleGrid columns={{ sm: 1, md: 2, lg: 3 }} spacing={5}>
-          {filteredProperties.map((property, index) => (
-            <Card key={index}>
-              <CardHeader>
-                <Heading size="md">{property.location}</Heading>
-              </CardHeader>
-              <CardBody>
-                <Text>Owner: {property.ownerName}</Text>
-                <Text>Property ID: {property.propertyId}</Text>
-                <Text>Price: {property.price} ETH</Text>
-              </CardBody>
-              <CardFooter>
-                <Button colorScheme="blue">View Details</Button>
-              </CardFooter>
-            </Card>
-          ))}
-        </SimpleGrid>
-      )}
-    </Box>
+        <div className="flex items-center gap-2">
+          <Button variant="outline" size="sm">
+            <Filter className="h-4 w-4 mr-2" />
+            Filter
+          </Button>
+          <Button variant="outline" size="sm">
+            <ArrowUpDown className="h-4 w-4 mr-2" />
+            Sort
+          </Button>
+        </div>
+      </div>
+
+      <div className="relative">
+        <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+        <Input
+          placeholder="Search by location, owner, ID, or type..."
+          className="pl-10"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+      </div>
+
+      <Tabs defaultValue="all">
+        <TabsList className="grid grid-cols-5 mb-8">
+          <TabsTrigger value="all">All</TabsTrigger>
+          <TabsTrigger value="commercial">Commercial</TabsTrigger>
+          <TabsTrigger value="residential">Residential</TabsTrigger>
+          <TabsTrigger value="retail">Retail</TabsTrigger>
+          <TabsTrigger value="mixed">Mixed Use</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="all" className="mt-0">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredProperties.map((property) => (
+              <PropertyCard key={property.id} property={property} />
+            ))}
+          </div>
+        </TabsContent>
+
+        <TabsContent value="commercial" className="mt-0">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredProperties
+              .filter((p) => p.type === "Commercial" || p.type === "Office")
+              .map((property) => (
+                <PropertyCard key={property.id} property={property} />
+              ))}
+          </div>
+        </TabsContent>
+
+        <TabsContent value="residential" className="mt-0">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredProperties
+              .filter((p) => p.type === "Residential")
+              .map((property) => (
+                <PropertyCard key={property.id} property={property} />
+              ))}
+          </div>
+        </TabsContent>
+
+        <TabsContent value="retail" className="mt-0">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredProperties
+              .filter((p) => p.type === "Retail")
+              .map((property) => (
+                <PropertyCard key={property.id} property={property} />
+              ))}
+          </div>
+        </TabsContent>
+
+        <TabsContent value="mixed" className="mt-0">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredProperties
+              .filter((p) => p.type === "Mixed Use")
+              .map((property) => (
+                <PropertyCard key={property.id} property={property} />
+              ))}
+          </div>
+        </TabsContent>
+      </Tabs>
+    </div>
   )
 }
 
-export default PropertyDeeds
+interface PropertyCardProps {
+  property: {
+    id: string
+    propertyId: string
+    location: string
+    ownerName: string
+    price: string
+    type: string
+    image: string
+    yield: string
+    occupancy: string
+    sqft: string
+  }
+}
+
+function PropertyCard({ property }: PropertyCardProps) {
+  const TypeIcon =
+    property.type === "Commercial" || property.type === "Office"
+      ? Building
+      : property.type === "Residential"
+        ? Home
+        : Building
+
+  return (
+    <Card className="overflow-hidden bg-black/40 backdrop-blur-sm border-white/10">
+      <div className="relative h-48">
+        <img
+          src={property.image || "/placeholder.svg"}
+          alt={property.location}
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute top-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-xs">{property.type}</div>
+      </div>
+
+      <CardContent className="p-4">
+        <div className="flex justify-between items-start mb-3">
+          <h3 className="font-bold text-lg">{property.location}</h3>
+          <div className="text-green-400 font-medium">{property.yield}</div>
+        </div>
+
+        <div className="space-y-2 text-sm">
+          <div className="flex items-center text-gray-300">
+            <MapPin className="h-4 w-4 mr-2 text-gray-400" />
+            {property.location}
+          </div>
+          <div className="flex items-center text-gray-300">
+            <User className="h-4 w-4 mr-2 text-gray-400" />
+            {property.ownerName}
+          </div>
+          <div className="flex items-center text-gray-300">
+            <TypeIcon className="h-4 w-4 mr-2 text-gray-400" />
+            {property.sqft} sq ft • {property.occupancy} Occupied
+          </div>
+        </div>
+      </CardContent>
+
+      <CardFooter className="p-4 pt-0 flex justify-between items-center">
+        <div className="flex items-center">
+          <DollarSign className="h-4 w-4 mr-1 text-gray-400" />
+          <span className="font-bold">${property.price}</span>
+          <span className="text-xs text-gray-400 ml-1">per token</span>
+        </div>
+
+        <Link href={`/dapp/property-deeds/${property.id}`}>
+          <Button variant="default" size="sm">
+            View Details
+          </Button>
+        </Link>
+      </CardFooter>
+    </Card>
+  )
+}
 

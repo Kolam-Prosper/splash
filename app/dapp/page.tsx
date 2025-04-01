@@ -1,11 +1,12 @@
 "use client"
 
 import type React from "react"
+
 import { useState } from "react"
 import Link from "next/link"
-import { LineChart, BarChart3, TrendingUp, TrendingDown, Bell, ArrowRight } from "lucide-react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./components/card"
-import { Button } from "./components/button"
+import { BarChart3, LineChart, TrendingUp, TrendingDown, Bell, ArrowRight } from "lucide-react"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
 
 export default function DAppDashboard() {
   // Replace the useAccount hook with:

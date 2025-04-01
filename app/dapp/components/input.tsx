@@ -29,7 +29,11 @@ const Input: React.FC<InputProps> = ({
 }) => {
   return (
     <div className={className}>
-      {label && <label htmlFor={name}>{label}</label>}
+      {label && (
+        <label htmlFor={name} className="block mb-1 font-medium">
+          {label}
+        </label>
+      )}
       <input
         type={type}
         placeholder={placeholder}
@@ -42,7 +46,7 @@ const Input: React.FC<InputProps> = ({
           error ? "border-red-500" : ""
         }`}
       />
-      {error && <p className="text-red-500 text-sm">{error}</p>}
+      {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
     </div>
   )
 }

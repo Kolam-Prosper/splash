@@ -12,7 +12,7 @@ interface TabsProps {
 }
 
 const Tabs: React.FC<TabsProps> = ({ children }) => {
-  const [activeTab, setActiveTab] = useState<string>(React.Children.toArray(children)[0]?.props.label || "")
+  const [activeTab, setActiveTab] = useState<string>(React.Children.toArray(children)[0]?.props?.label || "")
 
   const onClickTabItem = (tab: string) => {
     setActiveTab(tab)
@@ -20,7 +20,7 @@ const Tabs: React.FC<TabsProps> = ({ children }) => {
 
   return (
     <div className="tabs">
-      <ol className="tab-list">
+      <ol className="tab-list flex border-b mb-4">
         {React.Children.map(children, (child) => {
           if (!React.isValidElement(child)) {
             return null
@@ -60,10 +60,10 @@ const Tab: React.FC<TabProps> = ({ activeTab, label, onClick }) => {
     onClick(label)
   }
 
-  let className = "tab-list-item"
+  let className = "tab-list-item px-4 py-2 cursor-pointer"
 
   if (activeTab === label) {
-    className += " tab-list-active"
+    className += " border-b-2 border-blue-500 text-blue-500 font-medium"
   }
 
   return (
