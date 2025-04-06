@@ -39,6 +39,11 @@ export default function TokenomicsFlow() {
     },
   }
 
+  // Function to render a div inside foreignObject without xmlns attribute
+  const renderForeignObjectContent = (text: string, additionalClasses = "") => {
+    return <div className={`text-center text-xs text-slate-400 ${additionalClasses}`}>{text}</div>
+  }
+
   return (
     <div className="flex flex-col w-full bg-slate-900 rounded-lg shadow-md text-slate-50">
       <div className="p-4 border-b border-slate-800">
@@ -459,7 +464,7 @@ export default function TokenomicsFlow() {
                     LST AED Token
                   </text>
                   <foreignObject x="300" y="90" width="200" height="50">
-                    <div className="text-center text-xs text-slate-400 px-2">Interest-bearing flatcoin</div>
+                    {renderForeignObjectContent("Interest-bearing flatcoin", "px-2")}
                   </foreignObject>
 
                   {/* Staking */}
@@ -483,7 +488,7 @@ export default function TokenomicsFlow() {
                     Staking
                   </text>
                   <foreignObject x="100" y="240" width="160" height="50">
-                    <div className="text-center text-xs text-slate-400 px-2">Bonds or Deeds staked</div>
+                    {renderForeignObjectContent("Bonds or Deeds staked", "px-2")}
                   </foreignObject>
 
                   {/* Invest */}
@@ -507,9 +512,7 @@ export default function TokenomicsFlow() {
                     Invest
                   </text>
                   <foreignObject x="320" y="240" width="160" height="50">
-                    <div className="text-center text-xs text-slate-400 px-2">
-                      Use LST AED to further invest into other projects
-                    </div>
+                    {renderForeignObjectContent("Use LST AED to further invest into other projects", "px-2")}
                   </foreignObject>
 
                   {/* Dividends */}
@@ -533,7 +536,7 @@ export default function TokenomicsFlow() {
                     Dividends
                   </text>
                   <foreignObject x="540" y="240" width="160" height="50">
-                    <div className="text-center text-xs text-slate-400 px-2">Annual payments to holders</div>
+                    {renderForeignObjectContent("Annual payments to holders", "px-2")}
                   </foreignObject>
 
                   {/* Arrows */}
@@ -628,7 +631,7 @@ export default function TokenomicsFlow() {
                     Investment
                   </text>
                   <foreignObject x="100" y="85" width="160" height="40">
-                    <div className="text-center text-xs text-slate-400 px-2">Initial capital</div>
+                    {renderForeignObjectContent("Initial capital", "px-2")}
                   </foreignObject>
 
                   <rect
@@ -651,7 +654,7 @@ export default function TokenomicsFlow() {
                     Property Development
                   </text>
                   <foreignObject x="320" y="85" width="160" height="40">
-                    <div className="text-center text-xs text-slate-400 px-2">Real estate assets</div>
+                    {renderForeignObjectContent("Real estate assets", "px-2")}
                   </foreignObject>
 
                   <rect
@@ -674,7 +677,7 @@ export default function TokenomicsFlow() {
                     Value Appreciation
                   </text>
                   <foreignObject x="540" y="85" width="160" height="40">
-                    <div className="text-center text-xs text-slate-400 px-2">Increased property value</div>
+                    {renderForeignObjectContent("Increased property value", "px-2")}
                   </foreignObject>
 
                   {/* Middle Row */}
@@ -698,7 +701,7 @@ export default function TokenomicsFlow() {
                     Staking
                   </text>
                   <foreignObject x="100" y="205" width="160" height="40">
-                    <div className="text-center text-xs text-slate-400 px-2">Bonds or Deeds staked</div>
+                    {renderForeignObjectContent("Bonds or Deeds staked", "px-2")}
                   </foreignObject>
 
                   <rect
@@ -721,7 +724,7 @@ export default function TokenomicsFlow() {
                     LST AED Minting
                   </text>
                   <foreignObject x="320" y="205" width="160" height="40">
-                    <div className="text-center text-xs text-slate-400 px-2">Token creation</div>
+                    {renderForeignObjectContent("Token creation", "px-2")}
                   </foreignObject>
 
                   <rect
@@ -744,7 +747,7 @@ export default function TokenomicsFlow() {
                     Liquidity
                   </text>
                   <foreignObject x="540" y="205" width="160" height="40">
-                    <div className="text-center text-xs text-slate-400 px-2">Ecosystem liquidity</div>
+                    {renderForeignObjectContent("Ecosystem liquidity", "px-2")}
                   </foreignObject>
 
                   {/* Bottom Row */}
@@ -768,7 +771,7 @@ export default function TokenomicsFlow() {
                     Lending
                   </text>
                   <foreignObject x="100" y="325" width="160" height="40">
-                    <div className="text-center text-xs text-slate-400 px-2">Using LST AED</div>
+                    {renderForeignObjectContent("Using LST AED", "px-2")}
                   </foreignObject>
 
                   <rect
@@ -791,7 +794,7 @@ export default function TokenomicsFlow() {
                     Fee Generation
                   </text>
                   <foreignObject x="320" y="325" width="160" height="40">
-                    <div className="text-center text-xs text-slate-400 px-2">From lending activities</div>
+                    {renderForeignObjectContent("From lending activities", "px-2")}
                   </foreignObject>
 
                   <rect
@@ -814,7 +817,7 @@ export default function TokenomicsFlow() {
                     Rewards Distribution
                   </text>
                   <foreignObject x="540" y="325" width="160" height="40">
-                    <div className="text-center text-xs text-slate-400 px-2">To participants</div>
+                    {renderForeignObjectContent("To participants", "px-2")}
                   </foreignObject>
 
                   {/* Arrows */}
@@ -952,7 +955,7 @@ export default function TokenomicsFlow() {
                     No Token Inflation
                   </text>
                   <foreignObject x="280" y="90" width="240" height="50">
-                    <div className="text-center text-xs text-slate-400 px-4">Tokens backed by real assets</div>
+                    {renderForeignObjectContent("Tokens backed by real assets", "px-4")}
                   </foreignObject>
 
                   {/* Self-Sustaining */}
@@ -976,7 +979,7 @@ export default function TokenomicsFlow() {
                     Self-Sustaining Ecosystem
                   </text>
                   <foreignObject x="50" y="240" width="200" height="50">
-                    <div className="text-center text-xs text-slate-400 px-4">Through fee generation</div>
+                    {renderForeignObjectContent("Through fee generation", "px-4")}
                   </foreignObject>
 
                   {/* Reinvestment */}
@@ -1000,7 +1003,7 @@ export default function TokenomicsFlow() {
                     Continuous Reinvestment
                   </text>
                   <foreignObject x="300" y="240" width="200" height="50">
-                    <div className="text-center text-xs text-slate-400 px-4">Into new properties</div>
+                    {renderForeignObjectContent("Into new properties", "px-4")}
                   </foreignObject>
 
                   {/* Long-Term Value */}
@@ -1024,7 +1027,7 @@ export default function TokenomicsFlow() {
                     Long-Term Value Creation
                   </text>
                   <foreignObject x="550" y="240" width="200" height="50">
-                    <div className="text-center text-xs text-slate-400 px-4">Through real estate appreciation</div>
+                    {renderForeignObjectContent("Through real estate appreciation", "px-4")}
                   </foreignObject>
 
                   {/* Arrows */}
@@ -1090,4 +1093,5 @@ export default function TokenomicsFlow() {
     </div>
   )
 }
+
 
