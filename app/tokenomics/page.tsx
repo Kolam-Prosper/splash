@@ -1,29 +1,22 @@
 import Link from "next/link"
+import TokenomicsFlow from "./tokenomics-flow"
 
-export default function Tokenomics() {
+export default function TokenomicsPage() {
   return (
     <div className="min-h-screen bg-black text-white pt-16">
       <div className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold mb-8 text-center">Kolam Prosper Tokenomics</h1>
-
         <div className="max-w-5xl mx-auto bg-gray-900 rounded-lg shadow-lg p-8">
           <div className="mb-8">
-            <h2 className="text-2xl font-bold mb-4 text-orange-500">Treasury & Token Flow Model</h2>
+            <h2 className="text-3xl font-bold mb-4 text-orange-500">Kolam Prosper Tokenomics</h2>
             <p className="text-gray-300 mb-6">
               Our tokenomics model is designed to create a sustainable ecosystem that benefits all participants while
               maintaining the stability and value of our assets.
             </p>
-
-            {/* Placeholder for React Flow diagram */}
-            <div className="aspect-w-16 aspect-h-9 bg-gray-800 rounded-md flex items-center justify-center p-8 mb-8">
-              <div className="text-center">
-                <p className="text-gray-400 mb-4">Interactive Tokenomics Flow Diagram</p>
-                <p className="text-sm text-gray-500">This will be replaced with an interactive React Flow diagram</p>
-              </div>
-            </div>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8">
+          <TokenomicsFlow />
+
+          <div className="grid md:grid-cols-2 gap-8 mt-12">
             <div className="bg-gray-800 p-6 rounded-lg">
               <h3 className="text-xl font-bold mb-4 text-orange-500">Token Utility</h3>
               <ul className="space-y-3">
