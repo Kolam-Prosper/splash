@@ -1,4 +1,7 @@
+"use client"
+
 import MadagascarFlow from "./madagascar-flow"
+import Link from "next/link"
 
 export default function MadagascarInitiativePage() {
   return (
@@ -8,9 +11,22 @@ export default function MadagascarInitiativePage() {
           {/* Hero Section */}
           <div className="bg-gradient-to-br from-gray-900 to-black p-8 rounded-xl border border-gray-800 mb-10">
             <h1 className="text-3xl md:text-4xl font-bold mb-4 text-center">Madagascar Housing Initiative</h1>
-            <p className="text-xl text-gray-300 text-center max-w-3xl mx-auto">
+            <p className="text-xl text-gray-300 text-center max-w-3xl mx-auto mb-8">
               Building sustainable homes through innovative tokenized property deeds with social impact integration
             </p>
+
+            {/* Tab Navigation */}
+            <div className="flex border-b border-gray-700 justify-center">
+              <button
+                className="px-4 py-2 font-medium text-sm border-b-2 border-orange-500 text-orange-500"
+                onClick={() => {}}
+              >
+                Overview
+              </button>
+              <Link href="/$10k-homes" className="px-4 py-2 font-medium text-sm text-gray-400 hover:text-gray-300">
+                $10K Homes
+              </Link>
+            </div>
           </div>
 
           {/* Overview Section */}
@@ -369,43 +385,6 @@ export default function MadagascarInitiativePage() {
                 <strong>Expansion Potential:</strong> The model can be scaled to additional regions beyond Madagascar as
                 the capital base grows through reinvestment and new investor participation.
               </p>
-            </div>
-          </div>
-
-          {/* Meet the Team Section */}
-          <div className="bg-gray-900 rounded-lg shadow-lg p-8 mb-10">
-            <h2 className="text-2xl font-bold mb-6 text-orange-500">Meet the Team</h2>
-
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <div className="bg-gray-800 p-6 rounded-lg">
-                <h3 className="text-lg font-semibold text-white">Estelle Razanamala</h3>
-                <p className="text-orange-400 mb-2">Director</p>
-                <p className="text-gray-300">Technical Lead in Product Development (Madagascan)</p>
-              </div>
-
-              <div className="bg-gray-800 p-6 rounded-lg">
-                <h3 className="text-lg font-semibold text-white">Charli Joamamy</h3>
-                <p className="text-orange-400 mb-2">Director</p>
-                <p className="text-gray-300">Construction & Operations (Madagascan)</p>
-              </div>
-
-              <div className="bg-gray-800 p-6 rounded-lg">
-                <h3 className="text-lg font-semibold text-white">Guillermo Jones</h3>
-                <p className="text-orange-400 mb-2">Director</p>
-                <p className="text-gray-300">CTO Blockchain and Cloud Computing (ES)</p>
-              </div>
-
-              <div className="bg-gray-800 p-6 rounded-lg">
-                <h3 className="text-lg font-semibold text-white">Hardeep Singh</h3>
-                <p className="text-orange-400 mb-2">Back-end Programmer</p>
-                <p className="text-gray-300">(UAE)</p>
-              </div>
-
-              <div className="bg-gray-800 p-6 rounded-lg">
-                <h3 className="text-lg font-semibold text-white">Tamar Ali</h3>
-                <p className="text-orange-400 mb-2">Frontend Design</p>
-                <p className="text-gray-300">(UAE)</p>
-              </div>
             </div>
           </div>
 
