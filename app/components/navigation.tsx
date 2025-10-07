@@ -20,7 +20,6 @@ export default function Navigation() {
 
   const navItems = [
     { name: "Home", path: "/" },
-    { name: "$10K Homes", path: "/madagascar-initiative" },
     { name: "White Paper", path: "/whitepaper" },
     { name: "Pitch Deck", path: "/pitch-deck" },
     { name: "Tokenomics", path: "/tokenomics" },
